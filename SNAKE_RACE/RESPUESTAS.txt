@@ -1,0 +1,18 @@
+Possible race conditions
+
+1. Hay una condición de carrera en el método drawsnake de la clase  de tipo read-modify-write, en este caso de lectura cuando muchos hilos solicitan el cuerpo de la serpiente al mismo tiempo a través de la clase snakeapp.
+
+2. Hay cuatro condiciones de carrera en el método snakecalc de la clase Snake de tipo read-modify-write, en este caso dos de lectura (peekFirst y peekLast) y dos de escritura (push y remove).
+
+
+
+Inappropriate use of collections
+
+1. Existe un problema con la colección de snakeBody, que arroja una excepción de concurrentmodification excepción y genera las condiciones de carrera anteriormente mencionadas, se puede corregir sincronizando el acceso o utilizando un AtomicReferenceArray.
+
+Unnecessary use of active waits.
+
+1. Existe un problema de espera activa en la clase Snake en el método run cuando se utiliza el metodo Thread.sleep, se solucionó sincronizando el objeto hasta ese punto y utilizando el wait(t).
+
+
+

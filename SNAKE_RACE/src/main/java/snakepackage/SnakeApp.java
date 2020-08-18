@@ -98,7 +98,15 @@ public class SnakeApp {
                 break;
             }
         }
+        synchronized (this){
+            try {
+                wait(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println("Thread (snake) status:");
+
         for (int i = 0; i != MAX_THREADS; i++) {
             System.out.println("["+i+"] :"+thread[i].getState());
         }
@@ -138,7 +146,8 @@ public class SnakeApp {
             }
 
         }
-        messages = new String[]{String.valueOf("Max Size: "+maxSize),String.valueOf("First Dead: "+firstDead.get())};
+        String dead = firstDead.get()!=-1?String.valueOf(firstDead.get()):"No dead snakes yet";
+        messages = new String[]{String.valueOf("Max Size: "+maxSize),String.valueOf("First Dead: "+dead)};
     }
 
     public static String[] getMessages() {

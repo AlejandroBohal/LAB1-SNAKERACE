@@ -80,15 +80,16 @@ public class Snake extends Observable implements Runnable {
             setChanged();
             notifyObservers();
             try {
-                if (hasTurbo == true) {
-                    Thread.sleep(500 / 3);
-                } else {
-                    Thread.sleep(500);
+                synchronized (this){
+                    if (hasTurbo) {
+                        wait(5 / 3);
+                    } else {
+                        wait(5);
+                    }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
         fixDirection(head);
     }
