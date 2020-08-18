@@ -30,9 +30,9 @@ public class PrimeFinderThread extends Thread{
                 			pause();
 						}
 					}
+					System.out.println(i);
                     primes.add(i);
                     primeCounter.getAndIncrement();
-                    System.out.println(i);
                 }
             }
 	}

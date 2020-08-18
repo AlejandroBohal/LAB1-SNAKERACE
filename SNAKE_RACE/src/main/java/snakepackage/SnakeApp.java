@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ import javax.swing.JPanel;
 public class SnakeApp {
 
     private static SnakeApp app;
+    private static String messages[] = new String[]{"",""};
     public static final int MAX_THREADS = 80;
     Snake[] snakes = new Snake[MAX_THREADS];
     private static final Cell[] spawn = {
@@ -36,12 +39,18 @@ public class SnakeApp {
         new Cell(3 * (GridSize.GRID_WIDTH / 2) / 2,
         GridSize.GRID_HEIGHT - 2)};
     private JFrame frame;
+    private boolean firstRun = false;
     private static Board board;
-    int nr_selected = 0;
-    Thread[] thread = new Thread[MAX_THREADS];
-    JButton start = new JButton("Start");
-    JButton pause = new JButton("Pause");
-    JButton resume = new JButton("Resume");
+    private int nr_selected = 0;
+    private Thread[] thread = new Thread[MAX_THREADS];
+    private JButton start = new JButton("Start");
+    private JButton pause = new JButton("Pause");
+    private JButton resume = new JButton("Resume");
+    private int maxSize = 0;
+    private AtomicInteger firstDead = new AtomicInteger(-1);
+    private AtomicBoolean firstDeadB = new AtomicBoolean(false);
+
+
     public SnakeApp() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         frame = new JFrame("The Snake Race");
@@ -74,7 +83,7 @@ public class SnakeApp {
 
     private void init() {
         for (int i = 0; i != MAX_THREADS; i++) {
-            snakes[i] = new Snake(i + 1, spawn[i%8], i + 1);
+            snakes[i] = new Snake(i + 1, spawn[i%8], i + 1, firstDead, firstDeadB);
             snakes[i].addObserver(board);
             thread[i] = new Thread(snakes[i]);
         }
@@ -116,15 +125,33 @@ public class SnakeApp {
     }
 
     private void resumeThreads() {
+        for(Snake s:snakes){
+            s.setPaused(false);
+        }
     }
 
     private void pauseThreads() {
+        for(Snake s:snakes){
+            s.setPaused(true);
+            if(s.getSize()>maxSize){
+                maxSize = s.getSize();
+            }
+
+        }
+        messages = new String[]{String.valueOf("Max Size: "+maxSize),String.valueOf("First Dead: "+firstDead.get())};
     }
 
-    private void startThreads() {
+    public static String[] getMessages() {
+        return messages;
+    }
+
+    private void startThreads(){
         for (Thread t:thread){
-            t.start();
+            if (!firstRun) {
+                t.start();
+            }
         }
+        firstRun = true;
 
     }
 

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Control extends Thread {
     
     private final static int NTHREADS = 3;
-    private final static int MAXVALUE = 50;
+    private final static int MAXVALUE = 30000000;
     private final static int TMILISECONDS = 5000;
 
     private final int NDATA = MAXVALUE / NTHREADS;

@@ -113,7 +113,15 @@ public class Board extends JLabel implements Observer {
 		drawBarriers(g);
 		drawJumpPads(g);
 		drawTurboBoosts(g);
+		drawStatus(g);
 	}
+
+	private void drawStatus(Graphics g) {
+		g.drawString(SnakeApp.getMessages()[0], 700, 200);
+		g.drawString(SnakeApp.getMessages()[1], 700, 300);
+		repaint();
+	}
+
 
 	private void drawTurboBoosts(Graphics g) {
 		Image light = null;
