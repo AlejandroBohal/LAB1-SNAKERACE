@@ -14,13 +14,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Control extends Thread {
     
     private final static int NTHREADS = 3;
-    private final static int MAXVALUE = 30000000;
+    private final static int MAXVALUE = 50;
     private final static int TMILISECONDS = 5000;
 
     private final int NDATA = MAXVALUE / NTHREADS;
     private long t;
     private PrimeFinderThread pft[];
     private AtomicInteger primeCounter = new AtomicInteger(0);
+    private boolean isAlive = true;
     private Control() {
         super();
         this.pft = new  PrimeFinderThread[NTHREADS];
@@ -47,21 +48,26 @@ public class Control extends Thread {
         for(int i = 0;i < NTHREADS;i++ ) {
             pft[i].start();
         }
-        boolean isAlive = true;
         long startTime = System.currentTimeMillis();
         while (isAlive){
-            if (System.currentTimeMillis() - startTime >= t){
+            if (System.currentTimeMillis() - startTime >= t) {
+                this.isAlive = false;
                 waitAll();
-                System.out.println("Numero de primos encontrados hasta el momento:" + " "+ primeCounter);
+                System.out.println("Numero de primos encontrados hasta el momento:" + " " + primeCounter);
                 System.out.println("Presiona Enter para continuar");
                 Scanner scanner = new Scanner(System.in);
                 scanner.nextLine();
                 resumeAll();
+                if (areAlive()) {
+                    this.isAlive = true;
+                }
                 startTime = System.currentTimeMillis();
+
+
             }
 
-
         }
+
     }
 
     public long getT() {
@@ -80,5 +86,13 @@ public class Control extends Thread {
         for (int i=0; i<NTHREADS; i++){
             pft[i].setRunning(true);
         }
+    }
+    public boolean areAlive(){
+        boolean areAlive;
+        for (int i=0; i<NTHREADS; i++){
+            if (pft[i].isAlive()){
+                return true;
+            }
+        }return false;
     }
 }
