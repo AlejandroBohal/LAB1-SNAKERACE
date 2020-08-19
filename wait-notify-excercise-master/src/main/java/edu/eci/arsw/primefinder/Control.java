@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
+ * The type Control.
  */
 public class Control extends Thread {
     
@@ -33,7 +33,12 @@ public class Control extends Thread {
         }
         pft[i] = new PrimeFinderThread(i*NDATA, MAXVALUE + 1,primeCounter);
     }
-    
+
+    /**
+     * New control control.
+     *
+     * @return the control
+     */
     public static Control newControl() {
         return new Control();
     }
@@ -70,23 +75,47 @@ public class Control extends Thread {
 
     }
 
+    /**
+     * Gets t.
+     *
+     * @return the t
+     */
     public long getT() {
         return t;
     }
 
+    /**
+     * Sets t.
+     *
+     * @param t the t
+     */
     public void setT(long t) {
         this.t = t;
     }
+
+    /**
+     * Wait all.
+     */
     public void waitAll(){
         for (int i=0; i<NTHREADS;i++){
             pft[i].setRunning(false);
         }
     }
+
+    /**
+     * Resume all.
+     */
     public void resumeAll(){
         for (int i=0; i<NTHREADS; i++){
             pft[i].setRunning(true);
         }
     }
+
+    /**
+     * Are alive boolean.
+     *
+     * @return the boolean
+     */
     public boolean areAlive(){
         boolean areAlive;
         for (int i=0; i<NTHREADS; i++){

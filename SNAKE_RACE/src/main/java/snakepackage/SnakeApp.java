@@ -132,12 +132,18 @@ public class SnakeApp {
         });
     }
 
+    /**
+     * Resume los hilos
+     */
     private void resumeThreads() {
         for(Snake s:snakes){
             s.setPaused(false);
         }
     }
 
+    /**
+     * Pausa los hilos
+     */
     private void pauseThreads() {
         for(Snake s:snakes){
             s.setPaused(true);
@@ -149,6 +155,7 @@ public class SnakeApp {
         String dead = firstDead.get()!=-1?String.valueOf(firstDead.get()):"No dead snakes yet";
         messages = new String[]{String.valueOf("Max Size: "+maxSize),String.valueOf("First Dead: "+dead)};
     }
+
 
     public static String[] getMessages() {
         return messages;
@@ -167,5 +174,6 @@ public class SnakeApp {
     public static SnakeApp getApp() {
         return app;
     }
+
 
 }

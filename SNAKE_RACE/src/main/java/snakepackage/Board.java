@@ -15,21 +15,60 @@ import javax.swing.JLabel;
 import enums.GridSize;
 import java.io.InputStream;
 
+/**
+ * The type Board.
+ */
 public class Board extends JLabel implements Observer {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * The constant NR_BARRIERS.
+	 */
 	public static final int NR_BARRIERS = 5;
+	/**
+	 * The constant NR_JUMP_PADS.
+	 */
 	public static final int NR_JUMP_PADS = 2;
+	/**
+	 * The constant NR_TURBO_BOOSTS.
+	 */
 	public static final int NR_TURBO_BOOSTS = 2;
+	/**
+	 * The constant NR_FOOD.
+	 */
 	public static final int NR_FOOD = 5;
+	/**
+	 * The Food.
+	 */
 	static Cell[] food = new Cell[NR_FOOD];
+	/**
+	 * The Barriers.
+	 */
 	static Cell[] barriers = new Cell[NR_BARRIERS];
+	/**
+	 * The Jump pads.
+	 */
 	static Cell[] jump_pads = new Cell[NR_JUMP_PADS];
+	/**
+	 * The Turbo boosts.
+	 */
 	static Cell[] turbo_boosts = new Cell[NR_TURBO_BOOSTS];
+	/**
+	 * The Result.
+	 */
 	static int[] result = new int[SnakeApp.MAX_THREADS];
+	/**
+	 * The Random.
+	 */
 	Random random = new Random();
+	/**
+	 * The Gameboard.
+	 */
 	static Cell[][] gameboard = new Cell[GridSize.GRID_WIDTH][GridSize.GRID_HEIGHT];
 
+	/**
+	 * Instantiates a new Board.
+	 */
 	@SuppressWarnings("unused")
 	public Board() {
 		if ((NR_BARRIERS + NR_JUMP_PADS + NR_FOOD + NR_TURBO_BOOSTS) > GridSize.GRID_HEIGHT
@@ -42,6 +81,9 @@ public class Board extends JLabel implements Observer {
 		GenerateTurboBoosts();
 	}
 
+	/**
+	 * generate turbo boosts
+	 */
 	private void GenerateTurboBoosts() {
 		for (int i = 0; i != NR_TURBO_BOOSTS; i++) {
 			Cell tmp = gameboard[random.nextInt(GridSize.GRID_WIDTH)][random
@@ -55,6 +97,9 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * Generate portals
+	 */
 	private void GenerateJumpPads() {
 		for (int i = 0; i != NR_JUMP_PADS; i++) {
 			Cell tmp = gameboard[random.nextInt(GridSize.GRID_WIDTH)][random
@@ -91,6 +136,9 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * generate food
+	 */
 	private void GenerateFood() {
 		for (int i = 0; i != NR_FOOD; i++) {
 			Cell tmp = gameboard[random.nextInt(GridSize.GRID_WIDTH)][random
@@ -116,6 +164,10 @@ public class Board extends JLabel implements Observer {
 		drawStatus(g);
 	}
 
+	/**
+	 * Draw the game's status
+	 * @param g graphics
+	 */
 	private void drawStatus(Graphics g) {
 		g.drawString(SnakeApp.getMessages()[0], 700, 200);
 		g.drawString(SnakeApp.getMessages()[1], 700, 300);
@@ -123,6 +175,10 @@ public class Board extends JLabel implements Observer {
 	}
 
 
+	/**
+	 * Draw item Turbo Boosts on the board
+	 * @param g graphics
+	 */
 	private void drawTurboBoosts(Graphics g) {
 		Image light = null;
                 InputStream resource=ClassLoader.getSystemResourceAsStream("Img/lightning.png");
@@ -137,6 +193,10 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * Draw Jump pad, IDK men
+	 * @param g graphics
+	 */
 	private void drawJumpPads(Graphics g) {
 		Image jump = null;
                 InputStream resource=ClassLoader.getSystemResourceAsStream("Img/up.png");
@@ -151,6 +211,10 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * Draw the barriers where snakes can dead
+	 * @param g Graphics
+	 */
 	private void drawBarriers(Graphics g) {
 
 		Image firewall = null;
@@ -171,6 +235,10 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * Draw the food on the board
+	 * @param g Graphics
+	 */
 	private void drawFood(Graphics g) {
 		Image mouse = null;
                 InputStream resource=ClassLoader.getSystemResourceAsStream("Img/mouse.png");
@@ -187,6 +255,10 @@ public class Board extends JLabel implements Observer {
 		}
 	}
 
+	/**
+	 * Draw Snake
+	 * @param g Graphics
+	 */
 	private void drawSnake(Graphics g) {
 		for (int i = 0; i != SnakeApp.MAX_THREADS; i++) {
 			synchronized (SnakeApp.getApp().snakes[i].getBody()){
@@ -212,6 +284,10 @@ public class Board extends JLabel implements Observer {
 
 	}
 
+	/**
+	 * Draw the Grid where Snake move
+	 * @param g Graphics
+	 */
 	private void drawGrid(Graphics g) {
 		g.setColor(new Color(255, 250, 250));
 		g.fillRect(0, 0, GridSize.GRID_WIDTH * GridSize.WIDTH_BOX,

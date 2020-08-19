@@ -9,6 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import enums.Direction;
 import enums.GridSize;
 
+/**
+ * The type Snake.
+ */
 public class Snake extends Observable implements Runnable {
 
     private int idt;
@@ -28,10 +31,20 @@ public class Snake extends Observable implements Runnable {
     private boolean isSelected = false;
     private int growing = 0;
     private int size;
+    /**
+     * The Goal.
+     */
     public boolean goal = false;
     private AtomicInteger firstDead;
     private AtomicBoolean firstDeadB;
 
+    /**
+     * Instantiates a new Snake.
+     *
+     * @param idt       the idt
+     * @param head      the head
+     * @param direction the direction
+     */
     public Snake(int idt, Cell head, int direction) {
         this.idt = idt;
         this.direction = direction;
@@ -39,6 +52,16 @@ public class Snake extends Observable implements Runnable {
         size = INIT_SIZE;
 
     }
+
+    /**
+     * Instantiates a new Snake.
+     *
+     * @param idt        the idt
+     * @param head       the head
+     * @param direction  the direction
+     * @param firstDead  the first dead
+     * @param firstDeadB the first dead b
+     */
     public Snake(int idt, Cell head, int direction, AtomicInteger firstDead, AtomicBoolean firstDeadB) {
         this.idt = idt;
         this.direction = direction;
@@ -49,6 +72,11 @@ public class Snake extends Observable implements Runnable {
 
     }
 
+    /**
+     * Is snake end boolean.
+     *
+     * @return the boolean
+     */
     public boolean isSnakeEnd() {
 
         return snakeEnd;
@@ -94,6 +122,9 @@ public class Snake extends Observable implements Runnable {
         fixDirection(head);
     }
 
+    /**
+     * Calcula los estados referentes a la snake
+     */
     private void snakeCalc() {
         synchronized (snakeBody) {
             head = snakeBody.peekFirst();
@@ -119,6 +150,10 @@ public class Snake extends Observable implements Runnable {
         }
     }
 
+    /**
+     * Verifica si chocó
+     * @param newCell
+     */
     private void checkIfBarrier(Cell newCell) {
         if (Board.gameboard[newCell.getX()][newCell.getY()].isBarrier()) {
             // crash
@@ -301,6 +336,11 @@ public class Snake extends Observable implements Runnable {
         return newCell;
     }
 
+    /**
+     * Search objective.
+     *
+     * @param objective the objective
+     */
     public void searchObjective(Cell objective) {
 
         Random random = new Random();
@@ -355,10 +395,20 @@ public class Snake extends Observable implements Runnable {
         this.objective = c;
     }*/
 
+    /**
+     * Is paused boolean.
+     *
+     * @return the boolean
+     */
     public boolean isPaused() {
         return isPaused;
     }
 
+    /**
+     * Sets paused.
+     *
+     * @param paused the paused
+     */
     public void setPaused(boolean paused) {
         if(!paused){
             synchronized (this){
@@ -368,26 +418,56 @@ public class Snake extends Observable implements Runnable {
         isPaused = paused;
     }
 
+    /**
+     * Gets size.
+     *
+     * @return the size
+     */
     public int getSize() {
         return size;
     }
 
+    /**
+     * Sets size.
+     *
+     * @param size the size
+     */
     public void setSize(int size) {
         this.size = size;
     }
 
+    /**
+     * Gets body.
+     *
+     * @return the body
+     */
     public LinkedList<Cell> getBody() {
         return this.snakeBody;
     }
 
+    /**
+     * Is selected boolean.
+     *
+     * @return the boolean
+     */
     public boolean isSelected() {
         return isSelected;
     }
 
+    /**
+     * Sets selected.
+     *
+     * @param isSelected the is selected
+     */
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
 
+    /**
+     * Gets idt.
+     *
+     * @return the idt
+     */
     public int getIdt() {
         return idt;
     }

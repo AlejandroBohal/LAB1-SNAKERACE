@@ -4,14 +4,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The type Prime finder thread.
+ */
 public class PrimeFinderThread extends Thread{
 
-	
-	int a,b;
+
+	/**
+	 * The A.
+	 */
+	int a, /**
+	 * The B.
+	 */
+	b;
 	
 	private List<Integer> primes;
 	private AtomicInteger primeCounter;
 	private boolean running;
+
+	/**
+	 * Instantiates a new Prime finder thread.
+	 *
+	 * @param a            the a
+	 * @param b            the b
+	 * @param primeCounter the prime counter
+	 */
 	public PrimeFinderThread(int a, int b,AtomicInteger primeCounter) {
 		super();
 		this.primes = new LinkedList<>();
@@ -36,7 +53,13 @@ public class PrimeFinderThread extends Thread{
                 }
             }
 	}
-	
+
+	/**
+	 * Is prime boolean.
+	 *
+	 * @param n the n
+	 * @return the boolean
+	 */
 	boolean isPrime(int n) {
 	    boolean ans;
             if (n > 2) { 
@@ -50,13 +73,27 @@ public class PrimeFinderThread extends Thread{
 	    return ans;
 	}
 
+	/**
+	 * Gets primes.
+	 *
+	 * @return the primes
+	 */
 	public List<Integer> getPrimes() {
 		return primes;
 	}
 
+	/**
+	 * Is running boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isRunning() {
 		return running;
 	}
+
+	/**
+	 * Pause.
+	 */
 	public void pause(){
 		try {
 			wait();
@@ -64,6 +101,12 @@ public class PrimeFinderThread extends Thread{
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Sets running.
+	 *
+	 * @param running the running
+	 */
 	public void setRunning(boolean running) {
 		if (running){
 			synchronized (this){
