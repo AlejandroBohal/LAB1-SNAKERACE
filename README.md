@@ -5,7 +5,7 @@ Esta libreria está implementada en **JAVA** como laboratorio de **ARSW**
 Su funcionamiento se centra en mejorar el conocimiento de los estudiantes para aplicar el conocimiento sobre los conceptos de la programación concurrente.
 
 
-Para conocer la información de las respuestas, puede verlo en [RESPUESTAS](SNAKE_RACE\RESPUESTAS.txt)
+Para conocer la información de las respuestas, puede verlo en [RESPUESTAS](https://github.com/AlejandroBohal/LAB1-SNAKERACE/blob/master/SNAKE_RACE/RESPUESTAS.txt)
 
 ## Ejecutar
 
@@ -70,4 +70,4 @@ si necesita instalar algunos de los servicios mencionados puede encontrarlos aqu
 
 ## License
 
-Este proyecto es de libre uso y distribución, para más detalles vea el archivo [Snake LICENSE.md](SNAKE_RACE\LICENSE.md).
+Este proyecto es de libre uso y distribución, para más detalles vea el archivo [Snake LICENSE.md](https://github.com/AlejandroBohal/LAB1-SNAKERACE/blob/master/SNAKE_RACE/LICENSE.md).
